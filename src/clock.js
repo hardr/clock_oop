@@ -9,9 +9,14 @@ function Clock(object) {
   this.format = '24';
   this.amPM = 'AM';
 }
-
 Clock.prototype.setHours = function(num) {
-  this.hour = validHour(num);
+  if (num >= 12 && num < 24) {
+    this.hour = validHour(num);
+    this.format = '24';
+    this.amPM = 'PM';
+  } else if (num >= 0 && num <= 12) {
+    this.hour = validHour(num);
+  }
 };
 Clock.prototype.getHours = function() {
   return this.hour;
@@ -41,23 +46,23 @@ Clock.prototype.tick = function() {
     this.min = 0;
     this.hour++;
   }
-  if (this.format ==='24') {
+  if (this.format === '24') {
     if (this.hour === 24) {
       this.hour = 0;
       this.amPM = 'AM';
     }
-  } else {
+  } else if (this.format === '12') {
     if (this.hour === 12) {
       this.hour = 0;
       this.amPM = 'AM';
     }
   }
   return clock1;
-}
+};
 
 Clock.prototype.getFormat = function() {
-  return this.format + "-hour format";
-}
+  return this.format + '-hour format';
+};
 Clock.prototype.toggleFormat = function() {
   if (this.format === '24') {
     this.format = '12';
@@ -73,7 +78,15 @@ Clock.prototype.toggleFormat = function() {
       this.hour += 12;
     }
   }
-}
+};
+
+Clock.prototype.getTime = function() {
+  if (this.format === '24') {
+    return pad(this.hour) + ':' + pad(this.min) + ':' + pad(this.sec);
+  } else {
+    return pad(this.hour) + ':' + pad(this.min) + ':' + pad(this.sec) + ' ' + this.amPM;
+  }
+};
 
 var initTime = {
   hours: 23,
@@ -89,25 +102,34 @@ var invalidTime = {
 var clock1 = new Clock(initTime);
 // clock1.tick().tick();
 clock1.toggleFormat();
-clock1.tick().tick();
+clock1.tick();
 clock1.toggleFormat();
-console.log(clock1);
+console.log(clock1.getTime());
 
 var clock2 = new Clock();
-clock2.setHours(7);
+// clock2.setHours(7);
 console.log(clock2);
+console.log(clock2.setHours());
 
 function validHour(num) {
   if (num !== undefined) {
     if (num < 24 && num > 0) {
       return num;
     }
-  } return 00;
+  } return 0;
 }
 function validSixty(num) {
   if (num !== undefined) {
     if (num < 60 && num > 0) {
       return num;
     }
-  } return 00;
+  } return 0;
+}
+
+function pad(num) {
+  if (num < 10) {
+    return ('0' + num);
+  } else {
+    return ('' + num);
+  }
 }

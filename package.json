@@ -5,18 +5,12 @@
   "main": "gulpfile.js",
   "author": "",
   "license": "ISC",
-  "scripts": {
-    "test": "./node_modules/.bin/mocha -R list",
-    "linter": "./node_modules/.bin/gulp"
-  },
   "devDependencies": {
-    "chai": "^3.5.0",
     "gulp": "^3.9.1",
     "gulp-jscs": "^4.0.0",
     "gulp-jshint": "^2.0.1",
     "jshint": "^2.9.2",
     "jshint-stylish": "^2.2.0",
-    "mocha": "^2.5.3",
     "run-sequence": "^1.2.2"
   }
 }
